@@ -1,0 +1,22 @@
+# dsh-memory-lite bundle patch.
+#
+# Verified mount facts:
+# - This row is inserted at HOST level.
+# - Tools register globally, so every agent sees them.
+# - The standing section is attached on `agent/created` through
+#   `agent.ctx.systemPrompt.section(...)`, i.e. in that agent's own scope, so its
+#   contents follow the agent's working directory.
+# - Never point `vaultPath` at ~/.dsh/memory or ~/.zcode: those corpora are
+#   read-only legacy data. Leave `vaultPath` unset and the Config default applies
+#   (`<DSH_HOME>/memory-vault`, or `~/.dsh/memory-vault` when DSH_HOME is unset).
+- insert:
+    - id: memory-lite
+      name: dsh-memory-lite
+      config:
+        injectStanding: true
+        standingMaxItems: 8
+        standingBudgetChars: 1200
+        allowGlobalScope: true
+        redactSecrets: true
+        maxFileBytes: 65536
+        autoSavePolicy: hint
