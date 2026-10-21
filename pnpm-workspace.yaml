@@ -1,2 +1,8 @@
 allowBuilds:
   esbuild: true
+# pnpm 11 默认隔离 24 小时内发布的新版本；rollup 的所有平台二进制在同一批发布，
+# 而 vitest 需要与宿主平台匹配的那一个，因此对 rollup 家族豁免，其余依赖保留隔离。
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - rollup
+  - '@rollup/*'
